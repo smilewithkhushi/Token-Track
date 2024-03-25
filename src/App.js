@@ -20,6 +20,13 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
+
 function App() {
   const { ethers, JsonRpcProvider } = require("ethers");
   const { utils } = require("ethers");
@@ -27,6 +34,7 @@ function App() {
   //State variables
   const [tokens, setTokens] = useState([]);
   const [address, setAddress] = useState("");
+  const [error, setError] = useState(false);
 
   //Function to execute fetch tokens upon submission
   const handleSubmit = (e) => {
@@ -41,7 +49,8 @@ function App() {
       })
       .catch((err) => {
         setTokens([]);
-        console.log("Error fetching tokens: ", err);
+        setError(true);
+        console.log("throwing:: Error fetching tokens: ", err);
       });
   };
 
@@ -62,18 +71,18 @@ function App() {
     const tokens = await provider.send("qn_getWalletTokenBalance", {
       wallet: address,
       contracts: [
-        '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', //WETH
-        '0xdAC17F958D2ee523a2206206994597C13D831ec7', //USDT
-        '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0', //MATIC
-        '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72', //ENS
-      ]
+        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", //WETH
+        "0xdAC17F958D2ee523a2206206994597C13D831ec7", //USDT
+        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0", //MATIC
+        "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72", //ENS
+      ],
     });
     console.log("tokens = ", tokens);
     return tokens;
   };
 
   return (
-    <div className="w-full flex flex-col max-h-full p-4 items-center align-middle text-white bg-black ">
+    <div className="w-full flex flex-col max-h-full p-4  transition duration-500 ease-in-out items-center align-middle text-white bg-black ">
       <Header />
       <form
         onSubmit={handleSubmit}
@@ -100,7 +109,16 @@ function App() {
         >
           Show me the Tokens
         </Button>
+        
       </form>
+      {error && (
+        <Alert status="error">
+          <AlertIcon />
+          There was an error processing your request
+        </Alert>
+      )}
+    
+ 
       {tokens.length > 0 && (
         <div className="w-full p-4">
           <TableContainer>

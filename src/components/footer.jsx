@@ -3,7 +3,9 @@ import React from 'react'
 //the footer section of the token generator
 const Footer = () => {
   return (
-    <div>footer</div>
+    <div className='my-10'>
+      <p> Made with curiosity by Khushi</p>
+    </div>
   )
 }
 
