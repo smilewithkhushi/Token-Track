@@ -1,4 +1,13 @@
-# Getting Started with Create React App
+
+## About
+Token track helps you track the tokens/transactions done via your wallet address on Etherium.
+## Tech Stack
+
+**Technologies Used:** React, Ethers, TailwindCSS, ChakraUI, QuickNode
+
+<hr/>
+
+# Getting Started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
